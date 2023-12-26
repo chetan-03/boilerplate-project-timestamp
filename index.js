@@ -31,24 +31,6 @@ app.get("/api/", (req, res) => {
 })
 
 app.get("/api/:date", (req, res) => {
-  // let unix = Number(req.params.date)
-  // if (unix == NaN) {
-  //   // let utc = new Date(Date(req.params.date)).toUTCString()
-  //   // if (utc == 'Invalid Date') return res.json({ error: utc })
-  //   // return res.json({
-  //   //   unix: Date.parse(req.params.date),
-  //   //   utc
-  //   // })
-
-
-
-  // } else {
-  //   return res.json({
-  //     unix,
-  //     utc: new Date(unix).toUTCString()
-  //   })
-
-  // }
   if (isNaN(req.params.date)) {
 
     var date = new Date(req.params.date)
