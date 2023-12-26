@@ -21,28 +21,48 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/api/", (req, res) => {
+
+  return res.json({
+    unix: Date.now(),
+    utc: new Date().toUTCString()
+  })
+
+})
+
 app.get("/api/:date", (req, res) => {
+  // let unix = Number(req.params.date)
+  // if (unix == NaN) {
+  //   // let utc = new Date(Date(req.params.date)).toUTCString()
+  //   // if (utc == 'Invalid Date') return res.json({ error: utc })
+  //   // return res.json({
+  //   //   unix: Date.parse(req.params.date),
+  //   //   utc
+  //   // })
 
-  if (req.params.date) {
-    return res.json({
-      unix: Date.now(),
-      utc: new Date().toUTCString()
-    })
-  }
-  if (!req.params.date.includes('-')) {
 
-    return res.json({
-      unix: Number(req.params.date),
-      utc: new Date(Number(req.params.date)).toUTCString()
-    })
+
+  // } else {
+  //   return res.json({
+  //     unix,
+  //     utc: new Date(unix).toUTCString()
+  //   })
+
+  // }
+  if (isNaN(req.params.date)) {
+
+    var date = new Date(req.params.date)
 
   } else {
-    return res.json({
-      unix: Date.parse(req.params.date),
-      utc: new Date(Date(req.params.date)).toUTCString()
-    })
-  }
 
+    var date = new Date(Number(req.params.date))
+
+  }
+  if (date == 'Invalid Date') return res.json({ error: 'Invalid Date' })
+  console.log(date, req.params.date)
+  const utc = date.toUTCString()
+  const unix = Date.parse(utc)
+  return res.json({ unix, utc })
 })
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
